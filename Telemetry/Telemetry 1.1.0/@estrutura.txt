@@ -1,0 +1,11 @@
+royalciclo_monitor/
+│
+├── agent/
+│ └── agent.py # Script que coleta e envia dados
+│
+├── server/
+│ ├── app.py # API e interface web (Flask)
+│ └── templates/
+│ └── dashboard.html # Visualização no navegador
+│
+└── requirements.txt # Bibliotecas necessárias 
