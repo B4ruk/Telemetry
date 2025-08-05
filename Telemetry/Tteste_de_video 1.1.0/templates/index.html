@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Monitoramento</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f0f4ff;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #007BFF;
+        }
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #007BFF;
+        }
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+        tr:hover {
+            background-color: #e7f3ff;
+        }
+        .eye-icon {
+            cursor: pointer;
+            color: #007BFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>Dashboard de Monitoramento</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Usuário</th>
+                <th>Hostname</th>
+                <th>IP</th>
+                <th>RAM Total (MB)</th>
+                <th>RAM Usada (MB)</th>
+                <th>RAM Livre (MB)</th>
+                <th>CPU (%)</th>
+                <th>Uso Internet</th>
+                <th>Tempo de Atividade (s)</th>
+                <th>Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cliente in clientes %}
+            <tr>
+                <td>{{ cliente.usuario }}</td>
+                <td>{{ cliente.hostname }}</td>
+                <td>{{ cliente.ip }}</td>
+                <td>{{ (cliente.ram_total / (1024 * 1024)) | round(2) }}</td>
+                <td>{{ (cliente.ram_usada / (1024 * 1024)) | round(2) }}</td>
+                <td>{{ (cliente.ram_livre / (1024 * 1024)) | round(2) }}</td>
+                <td>{{ cliente.cpu_percent }}</td>
+                <td>{{ cliente.uso_internet }}</td>
+                <td>{{ cliente.tempo_atividade | round(2) }}</td>
+                <td><span class="eye-icon" onclick="abrirVideo('{{ cliente.ip }}')">👁️</span></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        function abrirVideo(ip) {
+            // Garante que o IP seja usado na URL corretamente
+            window.open(`http://${ip}:5000/video_feed`, '_blank');
+        }
+    </script>
+</body>
+</html>
